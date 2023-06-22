@@ -46,20 +46,22 @@ export interface Pokemon {
   weight_kg: number;
   generation: number;
   is_legendary: boolean;
-  image: string;
+  image: string | null;
   abilities: abilities[];
 }
 
-export interface PokemonProps {
+export interface PaginatedPokemonProps {
   pokemons: Pokemon[];
+  currentPage: number;
+  totalPage: number;
 }
 
 export interface PokemonHeightFilter {
   operator: string;
-  valueOfPokemonHeight: number;
+  valueOfPokemonHeight: number | null;
 }
 
 export interface PokemonWeightFilter {
   operator: string;
-  valueOfPokemonWeight: number;
+  valueOfPokemonWeight: number | null;
 }

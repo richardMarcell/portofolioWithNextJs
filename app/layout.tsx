@@ -1,5 +1,7 @@
 // app/layout.tsx
+import Header from "@/libs/components/Header/page";
 import { Providers } from "./providers";
+import Footer from "@/libs/components/footer/page";
 
 export default function RootLayout({
   children,

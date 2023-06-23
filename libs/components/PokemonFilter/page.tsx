@@ -14,6 +14,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
+import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { MultiValue } from "react-select";
@@ -22,6 +23,9 @@ import Select from "react-select";
 const PokemonFilter = () => {
   // variable untuk menyimpan hook useRouter
   const router: AppRouterInstance = useRouter();
+
+  // variabel untuk menyimpan hook useSearchParams
+  const searchParams: ReadonlyURLSearchParams | null = useSearchParams();
 
   // variabel menyimpan custom width
   const customWidth = {
@@ -49,22 +53,12 @@ const PokemonFilter = () => {
   // state untuk mengambil tinggi pokemon
   const [pokemonHeightFilters, setPokemonHeightFilters] = useState<
     PokemonHeightFilter[]
-  >([
-    {
-      operator: "",
-      valueOfPokemonHeight: null,
-    },
-  ]);
+  >([]);
 
   // state untuk mengambil berat pokemon
   const [pokemonWeightFilters, setPokemonWeightFilters] = useState<
     PokemonWeightFilter[]
-  >([
-    {
-      operator: "",
-      valueOfPokemonWeight: null,
-    },
-  ]);
+  >([]);
 
   // variabel untuk menyimpan option multiselect
   const multiSelectOption = {
@@ -279,19 +273,66 @@ const PokemonFilter = () => {
       .join(`,`);
     const urlWeightQuery = weightQuery === "" ? "" : `weight=${weightQuery}`;
 
-    router.push(
-      `?${urlNameQuery}&${urlGenderQuery}&${urlTypeQuery}&${urlClassificationQuery}&${urlHeightQuery}&${urlWeightQuery}`
-    );
+    const pokemonFilterQueryString = [
+      urlNameQuery,
+      urlGenderQuery,
+      urlClassificationQuery,
+      urlTypeQuery,
+      urlHeightQuery,
+      urlWeightQuery,
+    ];
+
+    const pokemonFilterForQueryStringUrl = pokemonFilterQueryString
+      .filter((query) => query !== "")
+      .map((query) => `${query}`)
+      .join("&");
+
+    router.push(`?${pokemonFilterForQueryStringUrl}`);
   };
 
+  const pokemonHeightFilterFromUrl: any[] = [];
+  const pokemonWeightFilterFromUrl: any[] = [];
+
+  const heightPokemon = searchParams?.getAll("height").toString();
+  const weightPokemon = searchParams?.getAll("weight").toString();
+
+  const heightPokemonSplited = heightPokemon?.split(",");
+  const weightPokemonSplited = weightPokemon?.split(",");
+
+  heightPokemonSplited?.forEach((height) => {
+    const operator = height.charAt(0);
+    const valueOfPokemonHeight = Number(height.slice(1));
+
+    pokemonHeightFilterFromUrl.push({ operator, valueOfPokemonHeight });
+  });
+
+  weightPokemonSplited?.forEach((weight) => {
+    const operator = weight.charAt(0);
+    const valueOfPokemonWeight = Number(weight.slice(1));
+
+    pokemonWeightFilterFromUrl.push({ operator, valueOfPokemonWeight });
+  });
+
   useEffect(() => {
-    router.replace("/pokemon");
-    setPokemonName("");
-    setSelectedPokemonGender([]);
-    setSelectedPokemonClassification([]);
-    setSelectedPokemonType([]);
-    setPokemonHeightFilters([]);
-    setPokemonWeightFilters([]);
+    setPokemonName((searchParams?.get("pokemonName") as string) || "");
+    setSelectedPokemonGender(
+      (searchParams
+        ?.getAll("pokemonGender")
+        .toString()
+        .split(",") as string[]) || []
+    );
+    setSelectedPokemonClassification(
+      (searchParams
+        ?.getAll("pokemonClassification")
+        .toString()
+        .split(",") as string[]) || []
+    );
+    setSelectedPokemonType(
+      (searchParams?.getAll("pokemonType").toString().split(",") as string[]) ||
+        []
+    );
+    setPokemonHeightFilters(pokemonHeightFilterFromUrl);
+    setPokemonWeightFilters(pokemonWeightFilterFromUrl);
   }, []);
 
   return (

@@ -24,23 +24,35 @@ const Pagination = ({
     queryStrings.push({ key, value });
   });
 
-  const pokemonQueryString = queryStrings
+  const pokemonFilterQueryString = queryStrings
     .filter((query) => query.key !== "page")
     .map((query) => `${query.key}=${query.value}`)
     .join("&");
 
   const handlePrevious = () => {
     const prevPage: number = currentPage - 1;
-    router.push(`?${pokemonQueryString}&page=${prevPage}`);
+    if (pokemonFilterQueryString === "") {
+      router.push(`?page=${prevPage}`);
+    } else {
+      router.push(`?${pokemonFilterQueryString}&page=${prevPage}`);
+    }
   };
 
   const handleNext = () => {
     const nextPage: number = currentPage + 1;
-    router.push(`?${pokemonQueryString}&page=${nextPage}`);
+    if (pokemonFilterQueryString === "") {
+      router.push(`?page=${nextPage}`);
+    } else {
+      router.push(`?${pokemonFilterQueryString}&page=${nextPage}`);
+    }
   };
 
   const handlePageClick = (pageNumber: number) => {
-    router.push(`?${pokemonQueryString}&page=${pageNumber}`);
+    if (pokemonFilterQueryString === "") {
+      router.push(`?page=${pageNumber}`);
+    } else {
+      router.push(`?${pokemonFilterQueryString}&page=${pageNumber}`);
+    }
   };
 
   const renderPageNumber = () => {

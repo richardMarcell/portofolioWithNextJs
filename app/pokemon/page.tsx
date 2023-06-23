@@ -302,16 +302,16 @@ const pokemon = async ({
   const weightValue: string[] = [];
 
   heightPokemonSplited?.forEach((height) => {
-    const operator = height.charAt(0);
-    const value = height.slice(1);
+    const operator: string = height.charAt(0);
+    const value: string = height.slice(1);
 
     heightOperator.push(operator);
     heightValue.push(value);
   });
 
   weightPokemonSplited?.forEach((weight) => {
-    const operator = weight.charAt(0);
-    const value = weight.slice(1);
+    const operator: string = weight.charAt(0);
+    const value: string = weight.slice(1);
 
     weightOperator.push(operator);
     weightValue.push(value);

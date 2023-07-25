@@ -1,3 +1,0 @@
-http://localhost:3000/pokemon?pokemonName=&pokemonGender=Minoritas%20Male,Balance
-
-http://localhost:3000/pokemon?pokemonName=&pokemonGender[]=Minoritas%20Male&pokemonGender[]=Balance

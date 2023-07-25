@@ -7,7 +7,7 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { useState } from "react";
 
 const Header = () => {
-  const navigations: string[] = ["Home", "Background", "Experience", "Contact"];
+  const navigations: string[] = ["Home", "Education", "Skill", "Project"];
 
   const colors: { primary: string; secondary: string } = {
     primary: "purple.400",
@@ -50,6 +50,7 @@ const Header = () => {
           right="0"
           left="0"
           zIndex="dropdown"
+          transition="top linear 0.5s"
         >
           <Box
             position="fixed"
@@ -64,7 +65,7 @@ const Header = () => {
           {navigations.map((nav) => (
             <Link
               key={nav}
-              href={"?page=" + nav.toLowerCase()}
+              href={"#" + nav.toLowerCase()}
               fontWeight="medium"
               marginX={{ lg: "5", md: "0", sm: "0", base: "0" }}
               marginY={{ lg: "0", md: "5", sm: "5", base: "5" }}

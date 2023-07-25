@@ -1,8 +1,29 @@
 "use client";
 
-import { Box, Button, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Image,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  WrapItem,
+  useDisclosure,
+} from "@chakra-ui/react";
+import LocalPhoneRoundedIcon from "@mui/icons-material/LocalPhoneRounded";
+import AttachEmailRoundedIcon from "@mui/icons-material/AttachEmailRounded";
 
 const HomePage = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Flex
       marginTop="10"
@@ -44,7 +65,7 @@ const HomePage = () => {
             sm: "center",
             base: "center",
           }}
-          fontSize={{ xl: "4xl", lg: "3xl", md: "4xl", sm: "2xl", base: "2xl" }}
+          fontSize={{ xl: "4xl", lg: "3xl", md: "4xl", sm: "2xl", base: "xl" }}
         >
           Unveiling Creativity: Explore the Dazzling Portfolio of Richard
           Marcell
@@ -63,7 +84,7 @@ const HomePage = () => {
             lg: "16px",
             md: "20px",
             sm: "16px",
-            base: "16px",
+            base: "12px",
           }}
         >
           Welcome to my captivating portfolio! I am Richard Marcell, a
@@ -80,9 +101,46 @@ const HomePage = () => {
             sm: "200px",
             base: "200px",
           }}
+          onClick={onOpen}
         >
-          More
+          Contact
         </Button>
+
+        <Modal isOpen={isOpen} onClose={onClose} isCentered>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader></ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Flex alignItems="center">
+                <WrapItem>
+                  <Avatar
+                    name="Dan Abrahmov"
+                    src="https://bit.ly/dan-abramov"
+                  />
+                </WrapItem>
+                <Box marginLeft="2">
+                  <Heading>Richard Marcell</Heading>
+                  <Text fontWeight="medium">Full Stack Web Developer</Text>
+                </Box>
+              </Flex>
+              <Flex marginTop="5">
+                <LocalPhoneRoundedIcon />
+                <Text marginLeft="3">081554098919</Text>
+              </Flex>
+              <Flex marginTop="5">
+                <AttachEmailRoundedIcon />
+                <Text marginLeft="3">richard.marcell8888@gmail.com</Text>
+              </Flex>
+            </ModalBody>
+            <Flex justifyContent="space-between" padding="6">
+              <Image src="/logo.svg" width="150px" />
+              <Button colorScheme="orange" onClick={onClose}>
+                Close
+              </Button>
+            </Flex>
+          </ModalContent>
+        </Modal>
       </Flex>
       <Flex
         marginLeft={{ xl: "20", lg: "20", md: "0", sm: "0", base: "0" }}

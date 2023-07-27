@@ -26,7 +26,9 @@ const HomePage = () => {
 
   return (
     <Flex
+      id="home"
       marginTop="10"
+      paddingTop="40"
       justifyContent={{
         xl: "space-between",
         lg: "space-between",

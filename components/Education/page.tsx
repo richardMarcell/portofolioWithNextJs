@@ -36,7 +36,9 @@ const EducationPage = () => {
   });
   return (
     <Flex
-      marginTop="40"
+      id="education"
+      marginTop="10"
+      paddingTop="40"
       flexDir={{
         xl: "row",
         lg: "row",

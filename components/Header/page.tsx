@@ -28,7 +28,7 @@ const Header = () => {
   const searchParams = useSearchParams();
 
   return (
-    <Box>
+    <Box position="fixed" top="0" left="0" right="0" backgroundColor="white" zIndex="modal">
       <Flex justifyContent="space-between" p={{ base: "2", md: "3", lg: "5" }}>
         <Image
           src="/logo.svg"
